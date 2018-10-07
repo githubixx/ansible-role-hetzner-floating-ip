@@ -1,0 +1,15 @@
+---
+# Filename that contains the floating v4 IP configuration in
+# "/etc/network/interfaces.d/". ".cfg" suffix will be appended
+# automatically.
+hetzner_floating_ipv4_filename: "99-floating-ipv4"
+# This default should be good enough as "eth0" is the only
+# interface that normally exists.
+hetzner_floating_ipv4_iface: "eth0:1"
+# Filename that contains the floating v6 IP configuration in
+# "/etc/network/interfaces.d/". ".cfg" suffix will be appended
+# automatically.
+hetzner_floating_ipv6_filename: "99-floating-ipv6"
+# This default should be good enough as "eth0" is the only
+# interface that normally exists.
+hetzner_floating_ipv6_iface: "eth0:1"
