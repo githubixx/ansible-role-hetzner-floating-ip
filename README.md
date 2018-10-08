@@ -11,7 +11,7 @@ I tag every release and try to stay with [semantic versioning](http://semver.org
 Requirements
 ------------
 
-A Hetzner Cloud VM ;-)
+A [Hetzner Cloud VM](https://www.hetzner.cloud) and a [floating](https://wiki.hetzner.de/index.php/Cloud_floating_IP_persistent/en) [IP](https://wiki.hetzner.de/index.php/CloudServer/en#What_are_floating_IPs_and_how_do_they_work.3F) ;-)
 
 Changelog
 ---------
