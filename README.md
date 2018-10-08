@@ -44,7 +44,7 @@ hetzner_floating_ipv6_filename: "99-floating-ipv6"
 hetzner_floating_ipv6_iface: "eth0:1"
 ```
 
-Additionally you need to set a few variables per host in `host_vars`. E.g. to add a IPv4 floating IP and use this floating IP as source IP you can add this variable and settings:
+Just adding the variables above isn't enough. If you just define this variables nothing will be deployed. Additionally you need to set a few variables per host in `host_vars`. E.g. to add a IPv4 floating IP and use this floating IP as source IP you can add this variable and settings:
 
 ```
 hetzner_floating_ipv4_options:
