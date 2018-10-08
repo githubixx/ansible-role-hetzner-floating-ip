@@ -1,1 +1,17 @@
-TBD
+galaxy_info:
+  author: Robert Wimmer
+  description: Adds a floating IP (v4 and/or v6) to a Hetzner Cloud host with additional options available.
+  license: GPLv3
+  min_ansible_version: 2.5
+  platforms:
+  - name: Ubuntu
+    versions:
+    - xenial
+    - bionic
+  galaxy_tags:
+    - networking
+    - interface
+    - linux
+    - ubuntu
+    - hetzner
+    - cloud
