@@ -68,10 +68,12 @@ Please be aware that this role won't restart networking or add the interface aut
 
 Here is a example for a IPv6 interface:
 
+```
 hetzner_floating_ipv6_options:
   - { option: "method",  value: "static" }
   - { option: "address", value: "2a01:4f8:1111:1111::1" }
   - { option: "netmask", value: "64" }
+```
 
 This will create a file `/etc/network/interfaces.d/99-floating-ipv6.cfg` with this content:
 
