@@ -2,9 +2,9 @@
 - name: Ensure IPv4 interfaces file exists
   copy:
     content: |
-      auto {{hetzner_floating_ipv4_iface}}
-      iface {{hetzner_floating_ipv4_iface}} inet static
-    dest: "/etc/network/interfaces.d/{{hetzner_floating_ipv4_filename}}.cfg"
+      auto {{ hetzner_floating_ipv4_iface }}
+      iface {{ hetzner_floating_ipv4_iface }} inet static
+    dest: "/etc/network/interfaces.d/{{ hetzner_floating_ipv4_filename }}.cfg"
     force: no
     group: root
     owner: root
@@ -13,20 +13,20 @@
 
 - name: Setting floating IPv4 interface options
   interfaces_file:
-    dest: "/etc/network/interfaces.d/{{hetzner_floating_ipv4_filename}}.cfg"
-    iface: "{{hetzner_floating_ipv4_iface}}"
-    option: "{{item.option}}"
-    value: "{{item.value}}"
+    dest: "/etc/network/interfaces.d/{{ hetzner_floating_ipv4_filename }}.cfg"
+    iface: "{{ hetzner_floating_ipv4_iface }}"
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
     state: "present"
-  with_items: "{{hetzner_floating_ipv4_options}}"
+  with_items: "{{ hetzner_floating_ipv4_options }}"
   when: hetzner_floating_ipv4_options is defined
 
 - name: Ensure IPv6 interfaces file exists
   copy:
     content: |
-      auto {{hetzner_floating_ipv6_iface}}
-      iface {{hetzner_floating_ipv6_iface}} inet static
-    dest: "/etc/network/interfaces.d/{{hetzner_floating_ipv6_filename}}.cfg"
+      auto {{ hetzner_floating_ipv6_iface }}
+      iface {{ hetzner_floating_ipv6_iface }} inet static
+    dest: "/etc/network/interfaces.d/{{ hetzner_floating_ipv6_filename }}.cfg"
     force: no
     group: root
     owner: root
@@ -35,10 +35,10 @@
 
 - name: Setting floating IPv6 interface options
   interfaces_file:
-    dest: "/etc/network/interfaces.d/{{hetzner_floating_ipv6_filename}}.cfg"
-    iface: "{{hetzner_floating_ipv6_iface}}"
-    option: "{{item.option}}"
-    value: "{{item.value}}"
+    dest: "/etc/network/interfaces.d/{{ hetzner_floating_ipv6_filename }}.cfg"
+    iface: "{{ hetzner_floating_ipv6_iface }}"
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
     state: "present"
-  with_items: "{{hetzner_floating_ipv6_options}}"
+  with_items: "{{ hetzner_floating_ipv6_options }}"
   when: hetzner_floating_ipv6_options is defined

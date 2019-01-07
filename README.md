@@ -16,9 +16,7 @@ A [Hetzner Cloud VM](https://www.hetzner.cloud) and a [floating](https://wiki.he
 Changelog
 ---------
 
-**v1.0.0**
-
-- initial implementation
+see [CHANGELOG.md](https://github.com/githubixx/ansible-role-hetzner-floating-ip/blob/master/CHANGELOG.md)
 
 Role Variables
 --------------
