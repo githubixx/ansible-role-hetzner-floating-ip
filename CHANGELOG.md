@@ -1,6 +1,10 @@
 Changelog
 ---------
 
+**no change**
+
+- deleted tag `v1.0.0` which is not compatible with Ansible Galaxy
+
 **2.0.0**
 
 - use correct semantic versioning as described in https://semver.org. Needed for Ansible Galaxy importer as it now insists on using semantic versioning.
