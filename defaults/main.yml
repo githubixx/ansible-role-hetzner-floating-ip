@@ -3,15 +3,26 @@
 # "/etc/network/interfaces.d/". ".cfg" suffix will be appended
 # automatically.
 hetzner_floating_ipv4_filename: "99-floating-ipv4"
+
 # By default "eth0" is the only interface that already exists.
 # This is the interface name that will be created and the
 # floating IPv4 assigned.
+# NOTE: This value isn't used for systems that manage networking
+# via netplan.io (which is true for Ubuntu 20.04 e.g.). In this
+# case the floating IP will be additionally added to "eth0"
+# interface.
 hetzner_floating_ipv4_iface: "eth0:1"
+
 # Filename that contains the floating v6 IP configuration in
 # "/etc/network/interfaces.d/". ".cfg" suffix will be appended
 # automatically.
 hetzner_floating_ipv6_filename: "99-floating-ipv6"
+
 # By default "eth0" is the only interface that already exists.
 # This is the interface name that will be created and the
 # floating IPv6 assigned.
+# NOTE: This value isn't used for systems that manage networking
+# via netplan.io (which is true for Ubuntu 20.04 e.g.). In this
+# case the floating IP will be additionally added to "eth0"
+# interface.
 hetzner_floating_ipv6_iface: "eth0:1"
