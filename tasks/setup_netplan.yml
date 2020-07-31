@@ -1,0 +1,111 @@
+---
+- name: Install required packages
+  apt:
+    name: "{{ packages }}"
+    state: present
+    update_cache: yes
+  vars:
+    packages:
+    - networkd-dispatcher
+
+- block:
+  - name: Set IPv4 address fact
+    set_fact:
+      address_ipv4="{{ hetzner_floating_ipv4_options | json_query(query) | first }}"
+    vars:
+      query: "[?option=='address'].value"
+
+  - name: Set IPv4 netmask fact
+    set_fact:
+      netmask_ipv4="{{ hetzner_floating_ipv4_options | json_query(query) | first }}"
+    vars:
+      query: "[?option=='netmask'].value"
+
+  - name: Set IPv4 post_up fact
+    set_fact:
+      post_up_ipv4="{{ hetzner_floating_ipv4_options | json_query(query) | first }}"
+    vars:
+      query: "[?option=='post-up'].value"
+  when: hetzner_floating_ipv4_options is defined
+
+- block:
+  - name: Set IPv6 address fact
+    set_fact:
+      address_ipv6="{{ hetzner_floating_ipv6_options | json_query(query) | first }}"
+    vars:
+      query: "[?option=='address'].value"
+
+  - name: Set IPv6 netmask fact
+    set_fact:
+      netmask_ipv6="{{ hetzner_floating_ipv6_options | json_query(query) | first }}"
+    vars:
+      query: "[?option=='netmask'].value"
+
+  - name: Set IPv6 post_up fact
+    set_fact:
+      post_up_ipv6="{{ hetzner_floating_ipv6_options | json_query(query) | first }}"
+    vars:
+      query: "[?option=='post-up'].value"
+  when: hetzner_floating_ipv6_options is defined
+
+- name: Ensure /etc/networkd-dispatcher/routable.d directory
+  file:
+    dest: /etc/networkd-dispatcher/routable.d
+    state: directory
+    mode: 0755
+
+- name: Create 50-ifup-hooks file
+  copy:
+    src: 50-ifup-hooks
+    dest: /etc/networkd-dispatcher/routable.d/50-ifup-hooks
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Ensure /etc/network directories
+  file:
+    path: "/etc/network/if-{{ item }}.d"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+  loop:
+    - up
+    - post-up
+
+- block:
+  - name: Ensure IPv4 interfaces file exists
+    template:
+      src: "floating-ipv4.j2"
+      dest: "/etc/netplan/{{ hetzner_floating_ipv4_filename }}.yaml"
+      group: root
+      owner: root
+      mode: 0644
+
+  - name: Create IPv4 post-up hook
+    template:
+      src: "floating-ipv4-post-up.j2"
+      dest: "/etc/network/if-post-up.d/{{ hetzner_floating_ipv4_filename }}"
+      group: root
+      owner: root
+      mode: 0755
+  when: hetzner_floating_ipv4_options is defined
+
+- block:
+  - name: Ensure IPv6 interfaces file exists
+    template:
+      src: "floating-ipv6.j2"
+      dest: "/etc/netplan/{{ hetzner_floating_ipv6_filename }}.yaml"
+      group: root
+      owner: root
+      mode: 0644
+
+  - name: Create IPv6 post-up hook
+    template:
+      src: "floating-ipv6-post-up.j2"
+      dest: "/etc/network/if-post-up.d/{{ hetzner_floating_ipv6_filename }}"
+      group: root
+      owner: root
+      mode: 0755
+  when: hetzner_floating_ipv6_options is defined
+
