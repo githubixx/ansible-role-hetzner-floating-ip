@@ -1,6 +1,11 @@
 Changelog
 ---------
 
+**3.0.0**
+
+- added support for Ubuntu 20.04 LTS (Focal Fossa)
+- added support for netplan.io (which is default in Ubuntu 20.04 LTS)
+
 **no change**
 
 - deleted tag `v1.0.0` which is not compatible with Ansible Galaxy
