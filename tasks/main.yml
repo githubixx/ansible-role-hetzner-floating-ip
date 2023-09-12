@@ -1,23 +1,25 @@
 ---
 - name: Gather instance facts
-  setup:
+  ansible.builtin.setup:
 
 - name: Install python-apt package
-  apt:
+  ansible.builtin.apt:
     name: python-apt
     state: present
-    update_cache: yes
+    update_cache: true
 
 - name: Gather package facts
-  package_facts:
+  ansible.builtin.package_facts:
     manager: auto
 
 - name: Include tasks for network setups using ifupdown
-  include_tasks: "setup_interfaces.yml"
   when:
     - "'netplan.io' not in ansible_facts.packages"
+  ansible.builtin.include_tasks:
+    file: "setup_interfaces.yml"
 
 - name: Include tasks for network setups using netplan.io
-  include_tasks: "setup_netplan.yml"
   when:
     - "'netplan.io' in ansible_facts.packages"
+  ansible.builtin.include_tasks:
+    file: "setup_netplan.yml"
