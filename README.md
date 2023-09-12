@@ -120,7 +120,7 @@ Example Playbook
 ```
 - hosts: floating-ip-hosts
   roles:
-    - githubixx.hetzner-floating-ip
+    - githubixx.hetzner_floating_ip
 ```
 
 License
