@@ -3,13 +3,13 @@ galaxy_info:
   author: Robert Wimmer
   description: Adds a floating IP (v4 and/or v6) to a Hetzner Cloud host with additional options available.
   license: GPLv3
-  min_ansible_version: 2.5
+  min_ansible_version: "2.5"
   role_name: hetzner_floating_ip
   namespace: githubixx
   platforms:
-  - name: Ubuntu
-    versions:
-    - focal
+    - name: Ubuntu
+      versions:
+        - focal
   galaxy_tags:
     - networking
     - interface
