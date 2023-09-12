@@ -1,44 +1,47 @@
 ---
 - name: Ensure IPv4 interfaces file exists
-  copy:
+  ansible.builtin.copy:
     content: |
       auto {{ hetzner_floating_ipv4_iface }}
       iface {{ hetzner_floating_ipv4_iface }} inet static
     dest: "/etc/network/interfaces.d/{{ hetzner_floating_ipv4_filename }}.cfg"
-    force: no
+    force: false
     group: root
     owner: root
-    mode: 0644
+    mode: "0644"
   when: hetzner_floating_ipv4_options is defined
 
 - name: Setting floating IPv4 interface options
-  interfaces_file:
+  when:
+    - hetzner_floating_ipv4_options is defined
+  community.general.interfaces_file:
     dest: "/etc/network/interfaces.d/{{ hetzner_floating_ipv4_filename }}.cfg"
     iface: "{{ hetzner_floating_ipv4_iface }}"
     option: "{{ item.option }}"
     value: "{{ item.value }}"
     state: "present"
   with_items: "{{ hetzner_floating_ipv4_options }}"
-  when: hetzner_floating_ipv4_options is defined
 
 - name: Ensure IPv6 interfaces file exists
-  copy:
+  when:
+    - hetzner_floating_ipv6_options is defined
+  ansible.builtin.copy:
     content: |
       auto {{ hetzner_floating_ipv6_iface }}
       iface {{ hetzner_floating_ipv6_iface }} inet static
     dest: "/etc/network/interfaces.d/{{ hetzner_floating_ipv6_filename }}.cfg"
-    force: no
+    force: false
     group: root
     owner: root
-    mode: 0644
-  when: hetzner_floating_ipv6_options is defined
+    mode: "0644"
 
 - name: Setting floating IPv6 interface options
-  interfaces_file:
+  when:
+    - hetzner_floating_ipv6_options is defined
+  community.general.interfaces_file:
     dest: "/etc/network/interfaces.d/{{ hetzner_floating_ipv6_filename }}.cfg"
     iface: "{{ hetzner_floating_ipv6_iface }}"
     option: "{{ item.option }}"
     value: "{{ item.value }}"
     state: "present"
   with_items: "{{ hetzner_floating_ipv6_options }}"
-  when: hetzner_floating_ipv6_options is defined
