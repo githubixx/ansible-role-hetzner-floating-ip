@@ -1,7 +1,7 @@
 ansible-role-hetzner-floating-ip
 ================================
 
-This Ansible role adds a floating IP (v4 and/or v6) to a [Hetzner Cloud](https://www.hetzner.cloud) host. Additionally you can change the source IP to the floating IP (which may be important for mailserver).
+This Ansible role adds a floating IP (v4 and/or v6) to a [Hetzner Cloud](https://www.hetzner.cloud) host. Additionally you can change the source IP to the floating IP.
 
 Versions
 --------
@@ -29,28 +29,10 @@ This variables can be defined in `group_vars` or `host_vars`:
 # automatically.
 hetzner_floating_ipv4_filename: "99-floating-ipv4"
 
-# By default "eth0" is the only interface that already exists.
-# This is the interface name that will be created and the
-# floating IPv4 assigned.
-# NOTE: This value isn't used for systems that manage networking
-# via netplan.io (which is true for Ubuntu 20.04 e.g.). In this
-# case the floating IP will be additionally added to "eth0"
-# interface.
-hetzner_floating_ipv4_iface: "eth0:1"
-
 # Filename that contains the floating v6 IP configuration in
 # "/etc/network/interfaces.d/". ".cfg" suffix will be appended
 # automatically.
 hetzner_floating_ipv6_filename: "99-floating-ipv6"
-
-# By default "eth0" is the only interface that already exists.
-# This is the interface name that will be created and the
-# floating IPv6 assigned.
-# NOTE: This value isn't used for systems that manage networking
-# via netplan.io (which is true for Ubuntu 20.04 e.g.). In this
-# case the floating IP will be additionally added to "eth0"
-# interface.
-hetzner_floating_ipv6_iface: "eth0:1"
 ```
 
 Just adding the variables above isn't enough. If you just define this variables nothing will be deployed. Additionally you need to set a few variables per host in `host_vars`. E.g. to add a IPv4 floating IP and use this floating IP as source IP you can add this variable and settings:
@@ -63,17 +45,7 @@ hetzner_floating_ipv4_options:
   - { option: "post-up", value: "ip route del default; ip route add default dev eth0 via 172.31.1.1 src 12.23.34.45" }
 ```
 
-In case of **Ubuntu <= 18.04** if you used the defaults above this will create a file `/etc/network/interfaces.d/99-floating-ipv4.cfg` with this content:
-
-```
-auto eth0:1
-iface eth0:1 inet static
-    address 12.23.34.45
-    netmask 32
-    post-up ip route del default; ip route add default dev eth0 via 172.31.1.1 src 12.23.34.45
-```
-
-In case of **Ubuntu >= 20.04** (which uses `netplan.io` instead of `ifupdown` networking package) a file called `/etc/netplan/99-floating-ipv4.yaml` will be created with this content:
+Using the examples above a file called `/etc/netplan/99-floating-ipv4.yaml` will be created with this content:
 
 ```
 network:
@@ -92,8 +64,6 @@ network:
 ip route del default; ip route add default dev eth0 via 172.31.1.1 src 12.23.34.45
 ```
 
-Please be aware that this role won't restart networking or add the interface automatically, yet! Either reboot the host or restart manually. As this role uses the Ansible [interfaces_file](https://docs.ansible.com/ansible/2.4/interfaces_file_module.html) module the same restrictions apply regarding `pre-up`, `up`, `post-up` and `down` [options](https://docs.ansible.com/ansible/2.4/interfaces_file_module.html#options).
-
 Here is a example for a IPv6 interface:
 
 ```
@@ -103,16 +73,7 @@ hetzner_floating_ipv6_options:
   - { option: "netmask", value: "64" }
 ```
 
-This will create a file `/etc/network/interfaces.d/99-floating-ipv6.cfg` with this content:
-
-```
-auto eth0:1
-iface eth0:1 inet static
-    address 2a01:4f8:1111:1111::1
-    netmask 64
-```
-
-As above this is true for `Ubuntu <= 18.04`. For `Ubuntu >= 20.04` the relevant files are `/etc/netplan/99-floating-ipv6.yaml` and `/etc/network/if-post-up.d/99-floating-ipv6`.
+The resulting files will be located at `/etc/netplan/99-floating-ipv6.yaml` and `/etc/network/if-post-up.d/99-floating-ipv6`.
 
 Example Playbook
 ----------------
