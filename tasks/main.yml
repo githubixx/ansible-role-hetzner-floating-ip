@@ -12,12 +12,6 @@
   ansible.builtin.package_facts:
     manager: auto
 
-- name: Include tasks for network setups using ifupdown
-  when:
-    - "'netplan.io' not in ansible_facts.packages"
-  ansible.builtin.include_tasks:
-    file: "setup_interfaces.yml"
-
 - name: Include tasks for network setups using netplan.io
   when:
     - "'netplan.io' in ansible_facts.packages"
