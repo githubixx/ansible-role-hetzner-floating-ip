@@ -2,9 +2,9 @@
 - name: Gather instance facts
   ansible.builtin.setup:
 
-- name: Install python-apt package
+- name: Install python-apt-common package
   ansible.builtin.apt:
-    name: python-apt
+    name: python-apt-common
     state: present
     update_cache: true
 
