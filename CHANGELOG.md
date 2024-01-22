@@ -1,6 +1,17 @@
 Changelog
 ---------
 
+**4.0.0**
+
+- **BREAKING**: remove support for Ubuntu <= 18.04
+- **BREAKING**: remove support for `ifupdown` managed interfaces (so now `netplan.io` only)
+- **BREAKING**: `meta/main.yml`: rename role to `hetzner_floating_ip` / add `role_name: hetzner_floating_ip` / add `namespace: githubixx`
+- add support for Ubuntu 22.04
+- add Github Actions workflow
+- min. Ansible version is now `2.9`
+- fix various `ansible-lint` issues
+- rename `python-apt` package to `python-apt-common`
+
 **3.0.0**
 
 - added support for Ubuntu 20.04 LTS (Focal Fossa)
