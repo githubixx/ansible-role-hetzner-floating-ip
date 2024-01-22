@@ -9,7 +9,8 @@ galaxy_info:
   platforms:
     - name: Ubuntu
       versions:
-        - focal
+        - "focal"
+        - "jammy"
   galaxy_tags:
     - networking
     - interface
